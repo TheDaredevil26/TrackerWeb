@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    Hello this is dashboard.
+    <button id="fetchbutton">Click and check console.</button>
+    <div id="units"></div>
+    <button id="createNote">Create Note</button>
+    <form id="unitcreate">
+        <h3>Create Note</h3>
+        <input type="text" name="title" placeholder="Title" required>
+        <br>
+        <input name="category" placeholder="Category" required>
+        <br>
+        <select name="difficulty" required>
+            <option value="">Difficulty</option>
+            <option value="Easy">Easy</option>
+            <option value="Medium">Medium</option>
+            <option value="Hard">Hard</option>
+        </select><br>
+
+        <select name="status" required>
+            <option value="">Status</option>
+            <option value="To Learn">To Learn</option>
+            <option value="Learning">Learning</option>
+            <option value="Learned">Learned</option>
+        </select><br>
+        <br>
+        <input name="confidence" placeholder="Confidence" required type="number" min="1" max="5">
+        <br>
+        <textarea name="notes" placeholder="Notes" required></textarea>
+        <br>
+        <button type="submit">Create Note</button>
+    </form>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/dashboard.js"></script>
+</body>
+
+</html>

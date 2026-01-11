@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/output.css">
+    <title>KnowledgeTracker - Own your study</title>
+</head>
+
+<body class="min-h-screen bg-blue-100">
+    <nav class="bg-white flex justify-between items-center h-16 px-4 border-b border-black">
+        <div class="logo font-sans font-bold text-lg flex items-center gap-2">
+            <img class="h-12 w-16 object-cover" src="../images/Logo.jpg" alt="KnowledgeTracker Logo">
+            <span>KnowledgeTracker</span>
+        </div>
+        <div class="options flex text-md gap-8 font-sans">
+            <div id="Features" class="hover:cursor-pointer hover:font-bold">Features</div>
+            <div id="How It Works" class="hover:cursor-pointer hover:font-bold">How It Works</div>
+        </div>
+        <div class="authenticate">
+            <div class="login flex gap-2">
+                <button
+                    class="log bg-white text-black rounded-2xl px-7 hover:bg-blue-500 hover:text-white hover:cursor-pointer ">Log
+                    In</button>
+                <button
+                    class=" reg bg-blue-500 text-white border-2 rounded-2xl pt-3 pb-3 pl-6 pr-6 hover:bg-blue-700 hover:cursor-pointer">Register</button>
+            </div>
+        </div>
+    </nav>
+    <section class="intro">
+        <div class="title font-bold text-5xl font-sans flex items-center justify-center mt-7">
+            <p class="text-center">Your Knowledge, <br> Beautifully Organised.</p>
+        </div><br>
+        <div class="desc text-xl font-light font-sans flex items-center justify-center">The modern-note taking platform
+            for designed for students and
+            <br> early professionals. Capture ideas, organise your plans, and build your<br> knowledge base.
+        </div><br>
+        <div class="authenticate flex items-center justify-center gap-6">
+            <button
+                class="log bg-blue-500 text-white border-2 rounded-2xl pt-3 pb-3 pl-6 pr-6 hover:bg-blue-700 hover:cursor-pointer ">Get
+                Started</button>
+
+            <button
+                class="redirect bg-white text-black rounded-2xl pt-3 pb-3 pl-6 pr-6 hover:bg-blue-500 hover:text-white hover:cursor-pointer">How
+                it Works</button>
+
+        </div>
+    </section>
+    <script src="/js/api.js"></script>
+    <script>
+        checkauth()
+            .then(() => window.location.href = `/dashboard.html`)
+            .catch(() => { });
+    </script>
+    <script src="/js/redirect.js"></script>
+
+
+
+</body>
+
+</html>
