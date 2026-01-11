@@ -165,3 +165,30 @@ const updateunit = async(id, data) =>{
   });
 };
 
+const filterUnits = document.getElementById("filter-form");
+
+filterUnits.addEventListener("submit", async(e)=>{
+  e.preventDefault();
+  const status  = filterUnits.statusFilter.value;
+  const difficulty = filterUnits.difficultyFilter.value;
+
+  try{
+    const res = await fetchKnowledgeUnits();
+    let filteredUnits = res;
+
+    if(status){
+      filteredUnits = filteredUnits.filter(unit => unit.status === status);
+      return renderUnits(filteredUnits);
+    }
+    if(difficulty){
+      filteredUnits = filteredUnits.filter(unit => unit.difficulty === difficulty);
+      return renderUnits(filteredUnits);
+    }
+  }
+  catch(err){
+    console.error("Error filtering knowledge units:", err);}
+  const resunits = await fetchKnowledgeUnits();
+  renderUnits(resunits);
+});
+
+

@@ -9,7 +9,27 @@
 
 <body>
     Hello this is dashboard.
-    <button id="fetchbutton">Click and check console.</button>
+    <form id = "filter-form">
+    <div id="filter">
+        <select id="statusFilter">
+            <option value="">All Statuses</option>
+            <option value="To Learn">To Learn</option>
+            <option value="Learning">Learning</option>
+            <option value="Learned">Learned</option>
+        </select>
+
+        <select id="difficultyFilter">
+            <option value="">All Difficulties</option>
+            <option value="Easy">Easy</option>
+            <option value="Medium">Medium</option>
+            <option value="Hard">Hard</option>
+        </select>
+
+        <input type="text" id="categoryFilter" placeholder="Category">
+
+        <button id="applyFilter" type="submit">Apply Filter</button>
+    </div>
+    </form>
     <div id="units"></div>
     <button id="createNote">Create Note</button>
     <form id="unitcreate">
