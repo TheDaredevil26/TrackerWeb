@@ -28,10 +28,6 @@ app.use(
     }
   })
 );
-app.use(express.static(path.join(__dirname, "../frontend/pages")));
-app.use("/js", express.static(path.join(__dirname, "../frontend/js")));
-app.use("/styles", express.static(path.join(__dirname, "../frontend/styles")));
-
 
 app.use("/auth", authRoutes);
 let conn =  await mongoose.connect(process.env.MONGO_URI).then(()=>{console.log("Connected")}
