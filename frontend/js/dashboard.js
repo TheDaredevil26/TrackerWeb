@@ -55,7 +55,6 @@ const renderUnits = (units) => {
     return;
   }
 
-  // Limit to 6 cards on dashboard
   const displayUnits = units.slice(0, 6);
 
   displayUnits.forEach((unit) => {
@@ -362,7 +361,6 @@ const updateunit = async(id, data) =>{
   });
 };
 
-// Navigation
 document.getElementById("dashboardBtn")?.addEventListener("click", () => {
   window.location.href = "/dashboard.html";
 });

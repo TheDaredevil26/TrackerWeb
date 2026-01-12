@@ -6,48 +6,234 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/styles/output.css">
     <link rel="stylesheet" href="/styles/static.css">
-    <title>KnowledgeTracker - Own your study</title>
+    <title>KnowledgeTracker - Master Your Learning Journey</title>
+    <style>
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        .float-animation {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .feature-card {
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.2);
+        }
+    </style>
 </head>
 
-<body>
-    <nav class="bg-white flex justify-between items-center h-16 px-4 border-b border-black">
-        <div class="logo font-sans font-bold text-lg flex items-center gap-2">
-            <img class="h-12 w-16 object-cover" src="../images/Logo.jpg" alt="KnowledgeTracker Logo">
-            <span>KnowledgeTracker</span>
+<body style="background: linear-gradient(180deg, #ffffff 0%, #f0f9ff 100%); min-height: 100vh;">
+    <nav class="bg-white flex justify-between items-center h-20 px-8 shadow-sm"
+        style="background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 50;">
+        <div class="logo font-sans font-bold text-xl flex items-center gap-3"
+            style="display: flex; align-items: center; gap: 0.75rem; font-size: 1.25rem; font-weight: 700;">
+            <div
+                style="padding: 0.5rem; background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%); border-radius: 0.75rem;">
+                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    style="width: 2rem; height: 2rem; color: white;">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253">
+                    </path>
+                </svg>
+            </div>
+            <span class="gradient-text">KnowledgeTracker</span>
         </div>
-        <div class="options flex text-md gap-8 font-sans">
-            <div id="Features" class="hover:cursor-pointer hover:font-bold">Features</div>
-            <div id="How It Works" class="hover:cursor-pointer hover:font-bold">How It Works</div>
+        <div class="options flex text-md gap-8 font-sans"
+            style="display: flex; gap: 2rem; font-size: 0.95rem; font-weight: 500;">
+            <div data-scroll-target="#features-section" class="hover:cursor-pointer hover:font-bold"
+                style="cursor: pointer; color: #374151; transition: all 0.2s;">Features</div>
+            <div data-scroll-target="#how-section" class="hover:cursor-pointer hover:font-bold"
+                style="cursor: pointer; color: #374151; transition: all 0.2s;">How It Works</div>
         </div>
         <div class="authenticate">
-            <div class="login flex gap-2">
+            <div class="login flex gap-3" style="display: flex; gap: 0.75rem;">
                 <button
-                    class="log bg-white text-black rounded-2xl px-7 hover:bg-blue-500 hover:text-white hover:cursor-pointer ">Log
+                    class="log bg-white text-black rounded-2xl px-7 hover:bg-blue-500 hover:text-white hover:cursor-pointer"
+                    style="background: white; color: #111827; border: 2px solid #e5e7eb; padding: 0.625rem 1.75rem; border-radius: 1rem; font-weight: 500; transition: all 0.3s; cursor: pointer;">Log
                     In</button>
                 <button
-                    class=" reg bg-blue-500 text-white border-2 rounded-2xl pt-3 pb-3 pl-6 pr-6 hover:bg-blue-700 hover:cursor-pointer">Register</button>
+                    class="reg bg-blue-500 text-white border-2 rounded-2xl pt-3 pb-3 pl-6 pr-6 hover:bg-blue-700 hover:cursor-pointer"
+                    style="background: #3b82f6; color: white; border: 2px solid #3b82f6; padding: 0.75rem 1.5rem; border-radius: 1rem; font-weight: 500; transition: all 0.3s; cursor: pointer;">Register</button>
             </div>
         </div>
     </nav>
-    <section class="intro">
-        <div class="title font-bold text-5xl font-sans flex items-center justify-center mt-7">
-            <p class="text-center">Your Knowledge, <br> Beautifully Organised.</p>
-        </div><br>
-        <div class="desc text-xl font-light font-sans flex items-center justify-center">The modern-note taking platform
-            for designed for students and
-            <br> early professionals. Capture ideas, organise your plans, and build your<br> knowledge base.
-        </div><br>
-        <div class="authenticate flex items-center justify-center gap-6">
-            <button
-                class="get-started bg-blue-500 text-white border-2 rounded-2xl pt-3 pb-3 pl-6 pr-6 hover:bg-blue-700 hover:cursor-pointer ">Get
-                Started</button>
 
+    <section class="intro" style="padding: 5rem 2rem 4rem;">
+        <div class="title font-bold text-6xl font-sans flex items-center justify-center fade-in-up"
+            style="display: flex; align-items: center; justify-content: center; font-size: 3.75rem; font-weight: 800; line-height: 1.2; margin-bottom: 1.5rem;">
+            <p class="text-center" style="text-align: center; color: #111827;">Your Knowledge,<br><span
+                    class="gradient-text">Beautifully Organized</span></p>
+        </div>
+        <div class="desc text-xl font-light font-sans flex items-center justify-center fade-in-up"
+            style="display: flex; align-items: center; justify-content: center; font-size: 1.25rem; color: #6b7280; text-align: center; margin-bottom: 3rem; line-height: 1.8; animation-delay: 0.2s;">
+            <p>The modern note-taking platform designed for students and professionals.<br>Capture ideas, organize your
+                learning, and build your knowledge base effortlessly.</p>
+        </div>
+        <div class="authenticate flex items-center justify-center gap-6 fade-in-up"
+            style="display: flex; align-items: center; justify-content: center; gap: 1.5rem; animation-delay: 0.4s;">
             <button
-                class="redirect bg-white text-black rounded-2xl pt-3 pb-3 pl-6 pr-6 hover:bg-blue-500 hover:text-white hover:cursor-pointer">How
+                class="get-started bg-blue-500 text-white border-2 rounded-2xl pt-3 pb-3 pl-6 pr-6 hover:bg-blue-700 hover:cursor-pointer"
+                style="background: #3b82f6; color: white; padding: 0.875rem 2rem; border-radius: 1rem; font-weight: 600; font-size: 1rem; transition: all 0.3s; cursor: pointer; border: none; box-shadow: 0 4px 14px rgba(59, 130, 246, 0.4);">Get
+                Started Free</button>
+            <button data-scroll-target="#how-section"
+                class="redirect bg-white text-black rounded-2xl pt-3 pb-3 pl-6 pr-6 hover:bg-blue-500 hover:text-white hover:cursor-pointer"
+                style="background: white; color: #111827; padding: 0.875rem 2rem; border-radius: 1rem; font-weight: 600; font-size: 1rem; transition: all 0.3s; cursor: pointer; border: 2px solid #e5e7eb;">How
                 it Works</button>
-
         </div>
     </section>
+
+    <section class="features" id="features-section"
+        style="padding: 4rem 2rem; max-width: 1200px; margin: 0 auto;">
+        <div style="text-align: center; margin-bottom: 4rem;">
+            <h2 style="font-size: 2.5rem; font-weight: 700; color: #111827; margin-bottom: 1rem;">Powerful Features for
+                Smart Learning</h2>
+            <p style="font-size: 1.125rem; color: #6b7280;">Everything you need to organize and track your knowledge
+                effectively</p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-bottom: 3rem;">
+            <div class="feature-card"
+                style="background: white; padding: 2rem; border-radius: 1rem; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border: 1px solid #e5e7eb;">
+                <div
+                    style="width: 3rem; height: 3rem; background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        style="width: 1.5rem; height: 1.5rem; color: white;">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2">
+                        </path>
+                    </svg>
+                </div>
+                <h3 style="font-size: 1.25rem; font-weight: 600; color: #111827; margin-bottom: 0.75rem;">Organized
+                    Notes</h3>
+                <p style="color: #6b7280; line-height: 1.6;">Create and manage knowledge units with categories,
+                    difficulty levels, and status tracking.</p>
+            </div>
+
+            <div class="feature-card"
+                style="background: white; padding: 2rem; border-radius: 1rem; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border: 1px solid #e5e7eb;">
+                <div
+                    style="width: 3rem; height: 3rem; background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        style="width: 1.5rem; height: 1.5rem; color: white;">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z">
+                        </path>
+                    </svg>
+                </div>
+                <h3 style="font-size: 1.25rem; font-weight: 600; color: #111827; margin-bottom: 0.75rem;">Smart
+                    Filtering</h3>
+                <p style="color: #6b7280; line-height: 1.6;">Filter your knowledge by status, difficulty, and category
+                    to find exactly what you need.</p>
+            </div>
+
+            <div class="feature-card"
+                style="background: white; padding: 2rem; border-radius: 1rem; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border: 1px solid #e5e7eb;">
+                <div
+                    style="width: 3rem; height: 3rem; background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        style="width: 1.5rem; height: 1.5rem; color: white;">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z">
+                        </path>
+                    </svg>
+                </div>
+                <h3 style="font-size: 1.25rem; font-weight: 600; color: #111827; margin-bottom: 0.75rem;">Track Progress
+                </h3>
+                <p style="color: #6b7280; line-height: 1.6;">Monitor your learning journey with visual dashboards and
+                    progress indicators.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="how-it-works" id="how-section"
+        style="padding: 4rem 2rem; background: white; border-radius: 2rem; max-width: 1200px; margin: 2rem auto; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
+        <div style="text-align: center; margin-bottom: 4rem;">
+            <h2 style="font-size: 2.5rem; font-weight: 700; color: #111827; margin-bottom: 1rem;">How It Works</h2>
+            <p style="font-size: 1.125rem; color: #6b7280;">Start organizing your knowledge in three simple steps</p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 3rem;">
+            <div style="text-align: center;">
+                <div
+                    style="width: 4rem; height: 4rem; background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; font-size: 1.5rem; font-weight: 700; color: white;">
+                    1</div>
+                <h3 style="font-size: 1.25rem; font-weight: 600; color: #111827; margin-bottom: 0.75rem;">Create Account
+                </h3>
+                <p style="color: #6b7280; line-height: 1.6;">Sign up for free and access your personal knowledge
+                    dashboard instantly.</p>
+            </div>
+
+            <div style="text-align: center;">
+                <div
+                    style="width: 4rem; height: 4rem; background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; font-size: 1.5rem; font-weight: 700; color: white;">
+                    2</div>
+                <h3 style="font-size: 1.25rem; font-weight: 600; color: #111827; margin-bottom: 0.75rem;">Add Knowledge
+                </h3>
+                <p style="color: #6b7280; line-height: 1.6;">Create knowledge units with titles, descriptions, and
+                    categorize them by difficulty.</p>
+            </div>
+
+            <div style="text-align: center;">
+                <div
+                    style="width: 4rem; height: 4rem; background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; font-size: 1.5rem; font-weight: 700; color: white;">
+                    3</div>
+                <h3 style="font-size: 1.25rem; font-weight: 600; color: #111827; margin-bottom: 0.75rem;">Track & Learn
+                </h3>
+                <p style="color: #6b7280; line-height: 1.6;">Update status, filter by categories, and watch your
+                    knowledge grow over time.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta" style="padding: 5rem 2rem; text-align: center;">
+        <div class="float-animation" style="max-width: 800px; margin: 0 auto;">
+            <h2 style="font-size: 3rem; font-weight: 700; color: #111827; margin-bottom: 1.5rem;">Ready to Master Your
+                Learning?</h2>
+            <p style="font-size: 1.25rem; color: #6b7280; margin-bottom: 2.5rem; line-height: 1.8;">Join thousands of
+                students and professionals organizing their knowledge effectively.</p>
+            <button
+                class="get-started bg-blue-500 text-white border-2 rounded-2xl pt-3 pb-3 pl-6 pr-6 hover:bg-blue-700 hover:cursor-pointer"
+                style="background: #3b82f6; color: white; padding: 1rem 3rem; border-radius: 1rem; font-weight: 600; font-size: 1.125rem; transition: all 0.3s; cursor: pointer; border: none; box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4);">Start
+                Learning Today</button>
+        </div>
+    </section>
+
     <script src="/js/api.js"></script>
     <script>
         checkauth()
@@ -56,19 +242,23 @@
     </script>
     <script src="/js/redirect.js"></script>
     <script>
-        const handleScrollFade = () => {
-            const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
-            const scrollProgress = window.scrollY / scrollHeight;
-
-            const lightness = 100 - (Math.abs(0.5 - scrollProgress) * 8);
-            document.documentElement.style.setProperty('--bg-lightness', `${lightness}%`);
-        };
-        window.addEventListener('scroll', handleScrollFade);
+        const scrollLinks = document.querySelectorAll('[data-scroll-target]');
+        scrollLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                const target = link.getAttribute('data-scroll-target');
+                const el = document.querySelector(target);
+                if (el) {
+                    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+        const getStartedButtons = document.querySelectorAll('.get-started');
+        getStartedButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                window.location.href = '/register.html';
+            });
+        });
     </script>
-
-
-
-
 </body>
 
 </html>
