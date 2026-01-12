@@ -34,12 +34,6 @@ let conn =  await mongoose.connect(process.env.MONGO_URI).then(()=>{console.log(
 ).catch((err)=>{console.log(err)})
 
 app.use("/knowledge", knowledgeRoutes);
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "../frontend/pages/index.html"));
-  res.send("Welcome")
-  console.log("Running")
-});
-
 app.get("/me", (req, res) => {
 
   if (!req.session.userId) {
