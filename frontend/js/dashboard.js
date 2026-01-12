@@ -371,7 +371,7 @@ document.getElementById("knowledgeunits")?.addEventListener("click", () => {
 
 document.getElementById("logoutBtn")?.addEventListener("click", async () => {
   try {
-    await fetch("/auth/logout", {
+    await fetch(`${BASE_URL}/auth/logout`, {
       method: "POST",
       credentials: "include",
     });

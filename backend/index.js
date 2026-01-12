@@ -7,6 +7,7 @@ import knowledgeRoutes from "./routes/knowledge.js";
 import path from "path";
 import { fileURLToPath } from "url";
 import dotenv from "dotenv";
+import cors from "cors";
 dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
@@ -29,11 +30,21 @@ app.use(
   })
 );
 
+app.use(express.static(path.join(__dirname, "../frontend")));
+app.use("/js", express.static(path.join(__dirname, "../frontend/js")));
+app.use("/styles", express.static(path.join(__dirname, "../frontend/styles")));
+app.use(express.static(path.join(__dirname, "../frontend/pages"), { extensions: ['html'] }));
+
+
 app.use("/auth", authRoutes);
 let conn =  await mongoose.connect(process.env.MONGO_URI).then(()=>{console.log("Connected")}
 ).catch((err)=>{console.log(err)})
 
 app.use("/knowledge", knowledgeRoutes);
+app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, "../frontend/pages/index.html"));
+});
+
 app.get("/me", (req, res) => {
 
   if (!req.session.userId) {

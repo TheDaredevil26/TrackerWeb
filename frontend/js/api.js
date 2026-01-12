@@ -1,6 +1,7 @@
+const BASE_URL = window.location.origin;
 
 const loginuser = async(credentials) =>{
-    const res = await fetch("http://localhost:3000/auth/login",{
+    const res = await fetch(`${BASE_URL}/auth/login`,{
         method : "POST",
         credentials: "include",
         headers : {
@@ -17,7 +18,7 @@ const loginuser = async(credentials) =>{
 
 
 const registeruser  = async (credentials) =>{
-    const res = await fetch("http://localhost:3000/auth/register",{
+    const res = await fetch(`${BASE_URL}/auth/register`,{
         method : "POST",
         credentials: "include", 
         headers:{
@@ -31,7 +32,7 @@ const registeruser  = async (credentials) =>{
 }
 
 const checkauth = async() =>{
-    const res = await fetch("http://localhost:3000/me",{
+    const res = await fetch(`${BASE_URL}/me`,{
         method: "GET",
         credentials: "include",
     });
@@ -42,7 +43,7 @@ const checkauth = async() =>{
 }
 
 const createKnowledgeUnit = async(data)=>{
-    const res= await fetch("/knowledge/add",{
+    const res= await fetch(`${BASE_URL}/knowledge/add`,{
       method:"POST",
       credentials :"include",
       headers:{
@@ -58,7 +59,7 @@ const createKnowledgeUnit = async(data)=>{
 }
 
 const deleteKnowledgeUnit = async(id)=>{
-    const res = await fetch(`/knowledge/del/${id}`,{
+    const res = await fetch(`${BASE_URL}/knowledge/del/${id}`,{
         method:"DELETE",
         credentials:"include",
         headers:{
@@ -73,7 +74,7 @@ const deleteKnowledgeUnit = async(id)=>{
 }
 
 const updateKnowledgeUnit = async(id, data) =>{
-    const res = await fetch(`/knowledge/${id}`,{
+    const res = await fetch(`${BASE_URL}/knowledge/${id}`,{
         method:"PATCH",
         credentials : "include",
         headers:{
