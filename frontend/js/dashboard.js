@@ -1,15 +1,7 @@
 const unitsContainer = document.getElementById("units");
 
 const fetchKnowledgeUnits = async () => {
-  const res = await fetch("/knowledge/all", {
-    credentials: "include",
-  });
-
-  if (!res.ok) {
-    throw await res.json();
-  }
-
-  return res.json();
+  return await getAllKnowledgeUnits();
 };
 
 const getDifficultyColor = (difficulty) => {
@@ -371,10 +363,7 @@ document.getElementById("knowledgeunits")?.addEventListener("click", () => {
 
 document.getElementById("logoutBtn")?.addEventListener("click", async () => {
   try {
-    await fetch(`${BASE_URL}/auth/logout`, {
-      method: "POST",
-      credentials: "include",
-    });
+    await logoutUser();
     window.location.href = "/login.html";
   } catch (err) {
     console.error("Logout failed:", err);

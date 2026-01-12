@@ -1,4 +1,4 @@
-const BASE_URL = window.location.origin;
+const BASE_URL = "https://knowledge-tracker.onrender.com";
 
 const loginuser = async(credentials) =>{
     const res = await fetch(`${BASE_URL}/auth/login`,{
@@ -87,4 +87,34 @@ const updateKnowledgeUnit = async(id, data) =>{
         throw await res.json();
     }
     return res.json();
+}
+
+const getAllKnowledgeUnits = async() =>{
+    const res = await fetch(`${BASE_URL}/knowledge/all`,{
+        method:"GET",
+        credentials:"include",
+        headers:{
+            "Content-Type" : "application/json"
+        }
+    });
+
+    if (!res.ok){
+        throw await res.json();
     }
+    return res.json();
+}
+
+const logoutUser = async() =>{
+    const res = await fetch(`${BASE_URL}/auth/logout`,{
+        method:"POST",
+        credentials:"include",
+        headers:{
+            "Content-Type" : "application/json"
+        }
+    });
+
+    if (!res.ok){
+        throw await res.json();
+    }
+    return res.json();
+}
