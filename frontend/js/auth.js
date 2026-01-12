@@ -21,6 +21,7 @@ form.addEventListener("submit", async(e)=>{
     const password = form.password.value;
     try{
         const res = await loginuser({email, password});
+        const verified = await checkauth();
         window.location.href = `/dashboard.html`;
     }catch(err){
         alert(err.message);
@@ -43,6 +44,7 @@ formRegister.addEventListener("submit", async(e)=>{
     try{
         const res = await registeruser({email, password});
         console.log("Registration successful:", res);
+        const verified = await checkauth();
         window.location.href = `/dashboard.html`;   
     }
     catch(err){
