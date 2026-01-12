@@ -1,4 +1,5 @@
 const unitsContainer = document.getElementById("units");
+const unitCountEl = document.getElementById("unitCount");
 
 const fetchKnowledgeUnits = async () => {
   const res = await fetch("/knowledge/all", {
@@ -41,6 +42,10 @@ const getDifficultySymbol = (difficulty) => {
 
 const renderUnits = (units) => {
   unitsContainer.innerHTML = "";
+  
+  if (unitCountEl) {
+    unitCountEl.textContent = units.length;
+  }
 
   if (!units || units.length === 0) {
     unitsContainer.innerHTML = `
@@ -55,10 +60,7 @@ const renderUnits = (units) => {
     return;
   }
 
-  // Limit to 6 cards on dashboard
-  const displayUnits = units.slice(0, 6);
-
-  displayUnits.forEach((unit) => {
+  units.forEach((unit) => {
     const difficultyClass = getDifficultyColor(unit.difficulty);
     const statusClass = getStatusColor(unit.status);
     const confidencePercentage = (unit.confidence / 5) * 100;
@@ -105,7 +107,7 @@ const renderUnits = (units) => {
           </svg>
           Update
         </button>
-        <button class="action-btn delete-btn delete-btn" data-id="${unit._id}">
+        <button class="action-btn delete-btn" data-id="${unit._id}">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
           </svg>
@@ -115,31 +117,29 @@ const renderUnits = (units) => {
     `;
     unitsContainer.appendChild(div);
   });
-   deleteunit();
-   updateunit();
-
+  deleteunit();
+  updateunit();
 };
 
-const initDashboard = async () => {
+const initKnowledgeUnits = async () => {
   try {
     const user = await checkauth();
     console.log("Authenticated user:", user);
 
     const response = await fetchKnowledgeUnits();
     renderUnits(response);
-
   } catch (err) {
-    console.error("Dashboard initialization failed:", err);
+    console.error("Knowledge units initialization failed:", err);
     window.location.href = "/login.html";
-    
   }
 };
 
-document.addEventListener("DOMContentLoaded", initDashboard);
+document.addEventListener("DOMContentLoaded", initKnowledgeUnits);
 
 const modal = document.getElementById("unitcreate");
 const createBtns = document.querySelectorAll(".createBtn");
 const createNoteBtn = document.getElementById("createNote");
+
 const closeModal = () => {
   modal.classList.add("hidden");
   form.reset();
@@ -188,42 +188,41 @@ document.addEventListener("keydown", (e) => {
   }
 });
 
-const form = document.getElementById("unitcreate")
+const form = document.getElementById("unitcreate");
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
-  const data= {
-   title : form.title.value,
-   category : form.category.value,
-   difficulty : form.difficulty.value,
-   status : form.status.value,
-   confidence : form.confidence.value,
-   notes : form.notes.value}
+  const data = {
+    title: form.title.value,
+    category: form.category.value,
+    difficulty: form.difficulty.value,
+    status: form.status.value,
+    confidence: form.confidence.value,
+    notes: form.notes.value
+  };
 
-  try{
+  try {
     await createKnowledgeUnit(data);
     form.reset();
-    modal.classList.add("hidden"); 
-    initDashboard();
-  }
-  catch(err){
+    modal.classList.add("hidden");
+    initKnowledgeUnits();
+  } catch (err) {
     console.error("Error creating knowledge unit:", err);
     alert("Failed to create Knowledge Unit");
   }
 });
 
-const deleteunit = async() =>{
+const deleteunit = async () => {
   const btn = document.querySelectorAll(".delete-btn");
 
   btn.forEach((button) => {
-    button.addEventListener("click", async()=>{
+    button.addEventListener("click", async () => {
       const id = button.getAttribute("data-id");
       if (confirm("Are you sure you want to delete this note?")) {
-        try{
+        try {
           await deleteKnowledgeUnit(id);
-          initDashboard();
-        }
-        catch(err){
+          initKnowledgeUnits();
+        } catch (err) {
           console.error("Error deleting knowledge unit:", err);
           alert("Failed to delete Knowledge Unit");
         }
@@ -232,12 +231,11 @@ const deleteunit = async() =>{
   });
 };
 
-const updateunit = async(id, data) =>{
-  
+const updateunit = async () => {
   const btn = document.querySelectorAll(".update-btn");
 
-  btn.forEach((button)=>{
-    button.addEventListener("click", async()=>{
+  btn.forEach((button) => {
+    button.addEventListener("click", async () => {
       const id = button.getAttribute("data-id");
       const cardDiv = button.closest(".note-card");
       const title = cardDiv.querySelector(".note-title").innerText;
@@ -245,12 +243,12 @@ const updateunit = async(id, data) =>{
       const difficulty = cardDiv.querySelector(".difficulty-badge")?.innerText?.match(/Easy|Medium|Hard/)?.[0] || '';
       const status = cardDiv.querySelector(".status-badge")?.innerText?.trim() || '';
       const confidence = cardDiv.querySelector(".confidence-bar")?.previousElementSibling?.querySelector('.text-blue-600')?.innerText?.match(/\d/)?.[0] || '3';
-      const notes = cardDiv.querySelector(".note-notes").innerText;    
+      const notes = cardDiv.querySelector(".note-notes").innerText;
 
       const updateModal = document.createElement("div");
       updateModal.className = "update-modal";
       updateModal.innerHTML = `
-        <div class="update-modal-content">
+        <div class="update-modal-content ">
           <div class="update-header">
             <h3 class="update-title">Update Note</h3>
             <button type="button" class="modal-close text-gray-400 hover:text-gray-600 text-2xl font-light">&times;</button>
@@ -312,7 +310,7 @@ const updateunit = async(id, data) =>{
 
       const confidenceSlider = updateModal.querySelector(".edit-confidence");
       const confidenceDisplay = updateModal.querySelector(".confidence-display");
-      
+
       confidenceSlider.addEventListener('input', (e) => {
         confidenceDisplay.textContent = e.target.value;
       });
@@ -331,29 +329,22 @@ const updateunit = async(id, data) =>{
         }
       });
 
-      document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape") {
-          closeUpdateModal();
-        }
-      });
-
-      const form = updateModal.querySelector(".update-form");
-      form.addEventListener("submit", async(e) => {
+      const updateForm = updateModal.querySelector(".update-form");
+      updateForm.addEventListener("submit", async (e) => {
         e.preventDefault();
         const updatedData = {
-          title : updateModal.querySelector(".edit-title").value,
-          category : updateModal.querySelector(".edit-category").value,
-          difficulty : updateModal.querySelector(".edit-difficulty").value,
-          status : updateModal.querySelector(".edit-status").value,
-          confidence : updateModal.querySelector(".edit-confidence").value,
-          notes : updateModal.querySelector(".edit-notes").value,
-        }
-        try{
+          title: updateModal.querySelector(".edit-title").value,
+          category: updateModal.querySelector(".edit-category").value,
+          difficulty: updateModal.querySelector(".edit-difficulty").value,
+          status: updateModal.querySelector(".edit-status").value,
+          confidence: updateModal.querySelector(".edit-confidence").value,
+          notes: updateModal.querySelector(".edit-notes").value,
+        };
+        try {
           await updateKnowledgeUnit(id, updatedData);
           closeUpdateModal();
-          initDashboard();
-        }
-        catch(err){
+          initKnowledgeUnits();
+        } catch (err) {
           console.error("Error updating knowledge unit:", err);
           alert("Failed to update Knowledge Unit");
         }
@@ -362,7 +353,42 @@ const updateunit = async(id, data) =>{
   });
 };
 
-// Navigation
+const filterForm = document.getElementById("filter-form");
+const clearFilterBtn = document.getElementById("clearFilter");
+
+filterForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const status = document.getElementById("statusFilter").value;
+  const difficulty = document.getElementById("difficultyFilter").value;
+  const category = document.getElementById("categoryFilter").value;
+
+  try {
+    const res = await fetchKnowledgeUnits();
+    let filteredUnits = res;
+
+    if (status) {
+      filteredUnits = filteredUnits.filter(unit => unit.status === status);
+    }
+    if (difficulty) {
+      filteredUnits = filteredUnits.filter(unit => unit.difficulty === difficulty);
+    }
+    if (category) {
+      filteredUnits = filteredUnits.filter(unit => unit.category.toLowerCase().includes(category.toLowerCase()));
+    }
+
+    renderUnits(filteredUnits);
+  } catch (err) {
+    console.error("Error filtering knowledge units:", err);
+  }
+});
+
+clearFilterBtn.addEventListener("click", async () => {
+  document.getElementById("statusFilter").value = "";
+  document.getElementById("difficultyFilter").value = "";
+  document.getElementById("categoryFilter").value = "";
+  initKnowledgeUnits();
+});
+
 document.getElementById("dashboardBtn")?.addEventListener("click", () => {
   window.location.href = "/dashboard.html";
 });
@@ -382,16 +408,3 @@ document.getElementById("logoutBtn")?.addEventListener("click", async () => {
     console.error("Logout failed:", err);
   }
 });
-
-const handleScrollFade = () => {
-  const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
-  const scrollProgress = window.scrollY / scrollHeight;
-
-  const lightness = 100 - (Math.abs(0.5 - scrollProgress) * 8);
-  document.documentElement.style.setProperty('--bg-lightness', `${lightness}%`);
-};
-
-window.addEventListener('scroll', handleScrollFade);
-
-
-

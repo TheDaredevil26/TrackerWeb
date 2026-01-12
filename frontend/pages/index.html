@@ -5,10 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/styles/output.css">
+    <link rel="stylesheet" href="/styles/static.css">
     <title>KnowledgeTracker - Own your study</title>
 </head>
 
-<body class="min-h-screen bg-blue-100">
+<body>
     <nav class="bg-white flex justify-between items-center h-16 px-4 border-b border-black">
         <div class="logo font-sans font-bold text-lg flex items-center gap-2">
             <img class="h-12 w-16 object-cover" src="../images/Logo.jpg" alt="KnowledgeTracker Logo">
@@ -38,7 +39,7 @@
         </div><br>
         <div class="authenticate flex items-center justify-center gap-6">
             <button
-                class="log bg-blue-500 text-white border-2 rounded-2xl pt-3 pb-3 pl-6 pr-6 hover:bg-blue-700 hover:cursor-pointer ">Get
+                class="get-started bg-blue-500 text-white border-2 rounded-2xl pt-3 pb-3 pl-6 pr-6 hover:bg-blue-700 hover:cursor-pointer ">Get
                 Started</button>
 
             <button
@@ -54,6 +55,17 @@
             .catch(() => { });
     </script>
     <script src="/js/redirect.js"></script>
+    <script>
+        const handleScrollFade = () => {
+            const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollProgress = window.scrollY / scrollHeight;
+
+            const lightness = 100 - (Math.abs(0.5 - scrollProgress) * 8);
+            document.documentElement.style.setProperty('--bg-lightness', `${lightness}%`);
+        };
+        window.addEventListener('scroll', handleScrollFade);
+    </script>
+
 
 
 

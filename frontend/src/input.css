@@ -1,1 +1,9 @@
 @import "tailwindcss";
+
+:root {
+    --bg-lightness: 100%;
+}
+
+body {
+    background-color: hsl(217, 91%, var(--bg-lightness));
+}
