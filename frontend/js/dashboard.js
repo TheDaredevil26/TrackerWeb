@@ -1,6 +1,6 @@
 const unitsContainer = document.getElementById("units");
 
-// Helper function to escape HTML and prevent XSS attacks
+
 const escapeHtml = (text) => {
   const div = document.createElement('div');
   div.textContent = text;
