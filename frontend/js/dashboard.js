@@ -117,7 +117,7 @@ const initDashboard = async () => {
         console.log("Authenticated as:", user.session);
 
         const units = await fetchKnowledgeUnits();
-        displayKnowledgeUnits(units);
+        renderUnits(units);
     } catch (err) {
         console.error("Dashboard init failed:", err);
         if (err.status === 401 || err.message === "Not authenticated") {
