@@ -112,18 +112,20 @@ const renderUnits = (units) => {
 };
 
 const initDashboard = async () => {
-  try {
-    const user = await checkauth();
-    console.log("Authenticated user:", user);
+    try {
+        const user = await checkauth();
+        console.log("Authenticated as:", user.session);
 
-    const response = await fetchKnowledgeUnits();
-    renderUnits(response);
-
-  } catch (err) {
-    console.error("Dashboard initialization failed:", err);
-    window.location.href = "/login.html";
-    
-  }
+        const units = await fetchKnowledgeUnits();
+        displayKnowledgeUnits(units);
+    } catch (err) {
+        console.error("Dashboard init failed:", err);
+        if (err.status === 401 || err.message === "Not authenticated") {
+            window.location.href = "/login.html";
+        } else {
+            alert("Failed to load data. Please refresh.");
+        }
+    }
 };
 
 document.addEventListener("DOMContentLoaded", initDashboard);
