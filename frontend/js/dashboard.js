@@ -34,6 +34,10 @@ const getDifficultySymbol = (difficulty) => {
 const renderUnits = (units) => {
   unitsContainer.innerHTML = "";
 
+  if (!Array.isArray(units)) {
+    units = [];
+  }
+
   if (!units || units.length === 0) {
     unitsContainer.innerHTML = `
       <div class="col-span-full flex flex-col items-center justify-center py-16">

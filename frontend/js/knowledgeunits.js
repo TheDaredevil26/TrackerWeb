@@ -35,6 +35,10 @@ const getDifficultySymbol = (difficulty) => {
 const renderUnits = (units) => {
   unitsContainer.innerHTML = "";
   
+  if (!Array.isArray(units)) {
+    units = [];
+  }
+  
   if (unitCountEl) {
     unitCountEl.textContent = units.length;
   }
