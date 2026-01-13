@@ -1,5 +1,12 @@
 const unitsContainer = document.getElementById("units");
 
+// Helper function to escape HTML and prevent XSS attacks
+const escapeHtml = (text) => {
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+};
+
 const fetchKnowledgeUnits = async () => {
   return await getAllKnowledgeUnits();
 };
@@ -63,35 +70,35 @@ const renderUnits = (units) => {
     div.dataset.id = unit._id;
 
     div.innerHTML = `
-      <div class="note-title">${unit.title}</div>
+      <div class="note-title">${escapeHtml(unit.title)}</div>
       
-      <div class="note-category">${unit.category}</div>
+      <div class="note-category">${escapeHtml(unit.category)}</div>
       
       <div class="note-meta">
         <div class="meta-item">
           <span class="meta-label">Difficulty</span>
           <span class="difficulty-badge difficulty-${difficultyClass}">
             <span>${getDifficultySymbol(unit.difficulty)}</span>
-            <span>${unit.difficulty}</span>
+            <span>${escapeHtml(unit.difficulty)}</span>
           </span>
         </div>
         <div class="meta-item">
           <span class="meta-label">Status</span>
-          <span class="status-badge ${statusClass}">${unit.status}</span>
+          <span class="status-badge ${statusClass}">${escapeHtml(unit.status)}</span>
         </div>
       </div>
 
       <div class="confidence-meter">
         <div class="flex justify-between items-center mb-2">
           <span class="text-xs font-semibold text-gray-600 uppercase tracking-wide">Confidence</span>
-          <span class="text-sm font-bold text-blue-600">${unit.confidence}/5</span>
+          <span class="text-sm font-bold text-blue-600">${parseInt(unit.confidence)}/5</span>
         </div>
         <div class="confidence-bar">
           <div class="confidence-fill" style="width: ${confidencePercentage}%"></div>
         </div>
       </div>
 
-      <div class="note-notes">${unit.notes}</div>
+      <div class="note-notes">${escapeHtml(unit.notes)}</div>
 
       <div class="note-actions">
         <button class="action-btn edit-btn update-btn" data-id="${unit._id}">
@@ -100,7 +107,7 @@ const renderUnits = (units) => {
           </svg>
           Update
         </button>
-        <button class="action-btn delete-btn delete-btn" data-id="${unit._id}">
+        <button class="action-btn delete-btn" data-id="${unit._id}">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
           </svg>
@@ -135,18 +142,28 @@ const initDashboard = async () => {
 document.addEventListener("DOMContentLoaded", initDashboard);
 
 const modal = document.getElementById("unitcreate");
+if (!modal) {
+  console.error("Modal element not found");
+}
+
 const createBtns = document.querySelectorAll(".createBtn");
 const createNoteBtn = document.getElementById("createNote");
 const closeModal = () => {
-  modal.classList.add("hidden");
-  form.reset();
+  if (!modal) return;
+  if (modal) modal.classList.add("hidden");
+  const form = document.getElementById("unitcreate");
+  if (form) form.reset();
   const confidenceSlider = document.getElementById('confidenceSlider');
   if (confidenceSlider) {
     confidenceSlider.value = 3;
-    document.getElementById('confidenceValue').textContent = 3;
+    const confidenceValue = document.getElementById('confidenceValue');
+    if (confidenceValue) confidenceValue.textContent = 3;
   }
 };
 
+if (!modal) {
+  console.error("Cannot attach modal event listeners - modal not found");
+} else {
 const modalCloseButtons = modal.querySelectorAll(".modal-close");
 modalCloseButtons.forEach(btn => {
   btn.addEventListener("click", closeModal);
@@ -169,7 +186,8 @@ if (createNoteBtn) {
 const confidenceSlider = document.getElementById('confidenceSlider');
 if (confidenceSlider) {
   confidenceSlider.addEventListener('input', (e) => {
-    document.getElementById('confidenceValue').textContent = e.target.value;
+    const confidenceValue = document.getElementById('confidenceValue');
+    if (confidenceValue) confidenceValue.textContent = e.target.value;
   });
 }
 
@@ -179,13 +197,19 @@ modal.addEventListener("click", (e) => {
   }
 });
 
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape" && !modal.classList.contains("hidden")) {
+const handleEscapeKey = (e) => {
+  if (e.key === "Escape" && modal && !modal.classList.contains("hidden")) {
     closeModal();
   }
-});
+};
+document.addEventListener("keydown", handleEscapeKey);
+}
 
-const form = document.getElementById("unitcreate")
+const form = document.getElementById("unitcreate");
+
+if (!form) {
+  console.error("Form element not found");
+} else {
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -208,6 +232,7 @@ form.addEventListener("submit", async (e) => {
     alert("Failed to create Knowledge Unit");
   }
 });
+}
 
 const deleteunit = async() =>{
   const btn = document.querySelectorAll(".delete-btn");
@@ -256,12 +281,12 @@ const updateunit = async(id, data) =>{
           <form class="update-form">
             <div class="update-form-group">
               <label>Title</label>
-              <input type="text" class="edit-title" value="${title}" required />
+              <input type="text" class="edit-title" value="${escapeHtml(title)}" required />
             </div>
 
             <div class="update-form-group">
               <label>Category</label>
-              <input type="text" class="edit-category" value="${category}" required />
+              <input type="text" class="edit-category" value="${escapeHtml(category)}" required />
             </div>
 
             <div class="update-form-row">
@@ -277,9 +302,9 @@ const updateunit = async(id, data) =>{
               <div class="update-form-group">
                 <label>Status</label>
                 <select class="edit-status" required>
-                  <option value="To Learn" ${status === 'TO LEARN' ? 'selected' : ''}>To Learn</option>
-                  <option value="Learning" ${status === 'LEARNING' ? 'selected' : ''}>Learning</option>
-                  <option value="Learned" ${status === 'LEARNED' ? 'selected' : ''}>Learned</option>
+                  <option value="To Learn" ${status === 'To Learn' ? 'selected' : ''}>To Learn</option>
+                  <option value="Learning" ${status === 'Learning' ? 'selected' : ''}>Learning</option>
+                  <option value="Learned" ${status === 'Learned' ? 'selected' : ''}>Learned</option>
                 </select>
               </div>
             </div>
@@ -294,7 +319,7 @@ const updateunit = async(id, data) =>{
 
             <div class="update-form-group">
               <label>Notes</label>
-              <textarea class="edit-notes" required>${notes}</textarea>
+              <textarea class="edit-notes" required>${escapeHtml(notes)}</textarea>
             </div>
 
             <div class="update-actions">
@@ -315,6 +340,7 @@ const updateunit = async(id, data) =>{
       });
 
       const closeUpdateModal = () => {
+        const escapeHandler = document.querySelector('[data-escape-handler]');
         updateModal.remove();
       };
 
@@ -328,11 +354,13 @@ const updateunit = async(id, data) =>{
         }
       });
 
-      document.addEventListener("keydown", (e) => {
+      const handleUpdateEscapeKey = (e) => {
         if (e.key === "Escape") {
           closeUpdateModal();
+          document.removeEventListener("keydown", handleUpdateEscapeKey);
         }
-      });
+      };
+      document.addEventListener("keydown", handleUpdateEscapeKey);
 
       const form = updateModal.querySelector(".update-form");
       form.addEventListener("submit", async(e) => {

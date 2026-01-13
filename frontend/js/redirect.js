@@ -1,15 +1,21 @@
 
 const btn = document.querySelector(".log");
-btn.addEventListener("click", ()=>{
-    window.location.href = "/login.html";
-});
+if (btn) {
+    btn.addEventListener("click", ()=>{
+        window.location.href = "/login.html";
+    });
+}
 
 const btnreg = document.querySelector(".reg");
-btnreg.addEventListener("click", ()=>{
-    window.location.href = "/register.html";
-});
+if (btnreg) {
+    btnreg.addEventListener("click", ()=>{
+        window.location.href = "/register.html";
+    });
+}
 
 const btnGetStarted = document.querySelector(".get-started");
-btnGetStarted.addEventListener("click", ()=>{
-    window.location.href = "/login.html";
-});
+if (btnGetStarted) {
+    btnGetStarted.addEventListener("click", ()=>{
+        window.location.href = "/login.html";
+    });
+}
